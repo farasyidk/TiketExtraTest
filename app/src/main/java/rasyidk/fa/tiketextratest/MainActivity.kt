@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import rasyidk.fa.tiketextratest.fragment.HomeFragment
 import rasyidk.fa.tiketextratest.fragment.ProfileFragment
+import rasyidk.fa.tiketextratest.helper.UserSession
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var session: UserSession
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -28,6 +30,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        session = UserSession(this)
+
+        if (session.checkLogin()) {
+            finish()
+        }
         initFragment(HomeFragment())
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
