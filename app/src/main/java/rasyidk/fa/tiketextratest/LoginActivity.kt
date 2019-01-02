@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.content.SharedPreferences
 import android.util.Log
+import android.util.Patterns
+import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.startActivity
@@ -31,12 +33,25 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         session = UserSession(this)
-        mAPIs = RestRepository(this, "")
+        mAPIs = RestRepository(this)
 
         sharedPreferences = getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE)
 
         btn_login.setOnClickListener {
-            Log.d("sampai", "kliked")
+
+            if (input_username.text.isEmpty()) {
+                input_username.error = "email tidak boleh kosong"
+                return@setOnClickListener
+            } else if(!validEmail(input_username.text.toString())) {
+                input_username.error = "format email salah"
+                return@setOnClickListener
+            }
+
+            if (input_password.text.isEmpty()) {
+                input_password.error = "password tidak boleh kosong"
+                return@setOnClickListener
+            }
+
             mAPIs.getToken(input_username.text.toString(), input_password.text.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -51,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                                     Log.d("hay", jsonResult.getString("success"))
                                     if (jsonResult.getString("success") == "true") {
                                         val key = jsonResult.getJSONObject("data").getString("token")
-                                        Log.d("sampai", "truee")
+                                        Log.d("sampai", "truee $key")
 
                                         session.createUserLoginSession(key)
                                         startActivity<MainActivity>()
@@ -75,4 +90,11 @@ class LoginActivity : AppCompatActivity() {
                     })
         }
     }
+
+    private fun validEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
 }
+
+

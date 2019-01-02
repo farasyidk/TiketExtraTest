@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.google.gson.GsonBuilder
+import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import rasyidk.fa.tiketextratest.core.AppPreferences
+import rasyidk.fa.tiketextratest.helper.UserSession
+import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -20,11 +23,10 @@ import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-class RestRepository(context: Context, private val Token: String) : APIs {
-
+class RestRepository(context: Context) : APIs {
 
     override val retrofit: Retrofit
-
+    private lateinit var session: UserSession
     private var mRestServices: RestServices
 
     init {
@@ -59,10 +61,10 @@ class RestRepository(context: Context, private val Token: String) : APIs {
                             .addHeader("Accept", "application/json")
                             .addHeader("Content-type", "application/json")
                             .method(originalRequest.method(), originalRequest.body())
-
+                    session = UserSession(context)
                     // Add JWT Token to the header if not empty
-                    if (!authorizationTokenIsEmpty()) {
-                        requestBuilder.addHeader("Authorization", "Token $Token")
+                    if (session.getUserDetails()["token"]?.isNotEmpty()!!) {
+                        requestBuilder.addHeader("Authorization", "Bearer ${session.getUserDetails()["token"]}")
                     }
 
                     val request = requestBuilder.build()
@@ -89,11 +91,6 @@ class RestRepository(context: Context, private val Token: String) : APIs {
 
     }
 
-    /**
-     * this is a trust manager functions
-     * @param httpLoggingInterceptor
-     * @return
-     */
     override fun createTrustManager(httpLoggingInterceptor: HttpLoggingInterceptor): SSLSocketFactory? {
         // Install the all-trusting trust manager
         val sslContext: SSLContext
@@ -132,11 +129,15 @@ class RestRepository(context: Context, private val Token: String) : APIs {
         return null
     }
 
-    override fun authorizationTokenIsEmpty(): Boolean {
-        return Token.isEmpty()
-    }
     override fun getToken(username: String, password: String): Call<ResponseBody> {
         return mRestServices.loginRequest(username, password)
     }
 
+    override fun getProfile(): Observable<Users> {
+        return mRestServices.getProfile()
+    }
+
+    override fun getUserImage(): Call<ResponseBody> {
+        return mRestServices.getUserImage()
+    }
 }
