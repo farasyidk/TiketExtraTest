@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import rasyidk.fa.tiketextratest.model.Bank
 import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -21,4 +22,6 @@ interface APIs {
     fun getUserImage(): Call<ResponseBody>
 
     fun setUserImage(userfile: MultipartBody.Part): Call<ResponseBody>
+
+    fun getBank(): Observable<ArrayList<Bank>>
 }

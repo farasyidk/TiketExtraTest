@@ -7,7 +7,7 @@ import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.http.*
 import okhttp3.MultipartBody
-
+import rasyidk.fa.tiketextratest.model.Bank
 
 
 interface RestServices {
@@ -26,4 +26,7 @@ interface RestServices {
     @POST("test/updateUserImage")
     @Multipart
     fun postImage(@Part userfile: MultipartBody.Part): Call<ResponseBody>
+
+    @GET("test/bank")
+    fun getBank(): Observable<ArrayList<Bank>>
 }

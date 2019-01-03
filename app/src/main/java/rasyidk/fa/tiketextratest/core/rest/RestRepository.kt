@@ -11,6 +11,7 @@ import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import rasyidk.fa.tiketextratest.core.AppPreferences
 import rasyidk.fa.tiketextratest.helper.UserSession
+import rasyidk.fa.tiketextratest.model.Bank
 import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -144,5 +145,9 @@ class RestRepository(context: Context) : APIs {
 
     override fun setUserImage(userFile: MultipartBody.Part): Call<ResponseBody> {
         return mRestServices.postImage(userFile)
+    }
+
+    override fun getBank(): Observable<ArrayList<Bank>> {
+        return mRestServices.getBank()
     }
 }
