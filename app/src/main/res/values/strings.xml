@@ -2,4 +2,8 @@
     <string name="app_name">TiketExtraTest</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Profile</string>
+    <string name="notification_success">Picture uploaded.</string>
+    <string name="notification_progress">Uploading...</string>
+    <string name="notification_share_link">Picture link</string>
+    <string name="notification_fail">Upload failed.</string>
 </resources>

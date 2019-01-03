@@ -1,6 +1,7 @@
 package rasyidk.fa.tiketextratest.core.rest
 
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import rasyidk.fa.tiketextratest.model.Users
@@ -18,4 +19,6 @@ interface APIs {
     fun getProfile(): Observable<Users>
 
     fun getUserImage(): Call<ResponseBody>
+
+    fun setUserImage(userfile: MultipartBody.Part): Call<ResponseBody>
 }

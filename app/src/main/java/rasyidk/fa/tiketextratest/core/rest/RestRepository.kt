@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -139,5 +140,9 @@ class RestRepository(context: Context) : APIs {
 
     override fun getUserImage(): Call<ResponseBody> {
         return mRestServices.getUserImage()
+    }
+
+    override fun setUserImage(userFile: MultipartBody.Part): Call<ResponseBody> {
+        return mRestServices.postImage(userFile)
     }
 }

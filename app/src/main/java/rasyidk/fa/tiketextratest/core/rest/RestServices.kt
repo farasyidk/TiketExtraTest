@@ -1,13 +1,14 @@
 package rasyidk.fa.tiketextratest.core.rest
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import okhttp3.ResponseBody
 import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
+import okhttp3.MultipartBody
+
+
 
 interface RestServices {
 
@@ -21,4 +22,8 @@ interface RestServices {
 
     @GET("test/getUserImage")
     fun getUserImage(): Call<ResponseBody>
+
+    @POST("test/updateUserImage")
+    @Multipart
+    fun postImage(@Part userfile: MultipartBody.Part): Call<ResponseBody>
 }
