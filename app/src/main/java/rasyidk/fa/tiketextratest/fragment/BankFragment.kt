@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,8 @@ class BankFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_bank, container, false)
 
+        Log.d("sampai", "home")
+
         mApis = RestRepository(context!!)
 
         mApis.getBank()
@@ -34,13 +37,14 @@ class BankFragment: Fragment() {
                 .unsubscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    list = it
+                    Log.d("sampai", "cekk")
+                    view.rv_bank.layoutManager = LinearLayoutManager(context)
+                    view.rv_bank.adapter = BankAdapter(context, it)
                 },{
 
                 })
 
-        view.rv_bank.layoutManager = LinearLayoutManager(context)
-        view.rv_bank.adapter = BankAdapter(context, list)
+
 
         return view
     }

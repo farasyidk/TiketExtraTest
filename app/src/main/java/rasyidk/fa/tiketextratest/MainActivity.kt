@@ -5,7 +5,9 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import rasyidk.fa.tiketextratest.fragment.BankFragment
 import rasyidk.fa.tiketextratest.fragment.HomeFragment
+import rasyidk.fa.tiketextratest.fragment.KeretaFragment
 import rasyidk.fa.tiketextratest.fragment.ProfileFragment
 import rasyidk.fa.tiketextratest.helper.UserSession
 
@@ -15,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                initFragment(HomeFragment())
+                initFragment(KeretaFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         if (session.checkLogin()) {
             finish()
         }
-        initFragment(HomeFragment())
+        initFragment(KeretaFragment())
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
