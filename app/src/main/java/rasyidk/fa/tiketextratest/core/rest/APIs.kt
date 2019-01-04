@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import rasyidk.fa.tiketextratest.model.Bank
+import rasyidk.fa.tiketextratest.model.Kereta
 import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -24,4 +25,7 @@ interface APIs {
     fun setUserImage(userfile: MultipartBody.Part): Call<ResponseBody>
 
     fun getBank(): Observable<ArrayList<Bank>>
+
+    fun getKereta(origin: String, destination: String, date: String, date_back:String, adult: String,
+                  infant: String, is_return: String): Observable<Kereta>
 }

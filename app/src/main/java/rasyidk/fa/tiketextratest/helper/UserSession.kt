@@ -75,4 +75,8 @@ class UserSession {
     private fun isUserLoggedIn(): Boolean {
         return pref.getBoolean(IS_USER_LOGIN, false)
     }
+
+    fun loginCheck(): Boolean {
+        return pref.getBoolean(IS_USER_LOGIN, false)
+    }
 }

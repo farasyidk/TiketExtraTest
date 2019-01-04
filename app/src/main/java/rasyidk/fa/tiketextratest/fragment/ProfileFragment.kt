@@ -37,6 +37,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.graphics.Bitmap
 import android.net.Uri
+import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.Toast
 import okhttp3.RequestBody
@@ -56,6 +57,8 @@ class ProfileFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        (context as AppCompatActivity).supportActionBar?.title = "Profil"
 
         vw = view
         mAPIs = RestRepository(context!!)

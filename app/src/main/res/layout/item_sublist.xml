@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_kereta"
-        android:layout_width="match_parent"
+    <Button
+        android:text="Pesan"
+        android:padding="10dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

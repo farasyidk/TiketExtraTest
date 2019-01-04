@@ -27,9 +27,12 @@ class KeretaFragment: Fragment() {
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
     val day = calendar.get(Calendar.DAY_OF_MONTH)
+    val kdCountries = arrayOf("YK","GMR","PWS","BD")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_kereta, container, false)
+
+        (context as AppCompatActivity).supportActionBar?.title = "Form Kereta"
 
         view.spinBerangkat.setItems("Yogyakarta", "Gambir", "Purwosari", "Bandung")
         view.spinTujuan.setItems("Yogyakarta", "Gambir", "Purwosari", "Bandung")
@@ -44,11 +47,17 @@ class KeretaFragment: Fragment() {
 
         view.btnCariKereta.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("idTeam", "kirimm")
-            ListKeretaFragment().arguments = bundle
+            bundle.putString("dari", kdCountries[view.spinBerangkat.selectedIndex])
+            bundle.putString("ke", kdCountries[view.spinTujuan.selectedIndex])
+            bundle.putString("sdt", view.inputSdt.text.toString())
+            bundle.putString("edt", view.inputEdt.text.toString())
+            bundle.putString("bayi", view.inputBayi.text.toString())
+            bundle.putString("dewasa", view.inputDewasa.text.toString())
+            val listKeretaFragment = ListKeretaFragment()
+            listKeretaFragment.arguments = bundle
             val manager = (context as AppCompatActivity).supportFragmentManager
             val transaction = manager.beginTransaction()
-            transaction.replace(R.id.dashboard_main, ListKeretaFragment())
+            transaction.replace(R.id.dashboard_main, listKeretaFragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
@@ -63,7 +72,7 @@ class KeretaFragment: Fragment() {
             calendar.set(Calendar.MONTH, selectedmonth)
             calendar.set(Calendar.DAY_OF_MONTH,
                     selectedday)
-            val sdf = SimpleDateFormat("dd-MM-yyyy",
+            val sdf = SimpleDateFormat("dd-MMM-yyyy",
                     Locale.ENGLISH)
 
             input.text = sdf.format(calendar.time).toEditable()

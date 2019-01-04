@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import okhttp3.MultipartBody
 import rasyidk.fa.tiketextratest.model.Bank
+import rasyidk.fa.tiketextratest.model.Kereta
 
 
 interface RestServices {
@@ -29,4 +30,16 @@ interface RestServices {
 
     @GET("test/bank")
     fun getBank(): Observable<ArrayList<Bank>>
+
+    @POST("test/getAvailability")
+    @FormUrlEncoded
+    fun getKereta(@Field("origin") origin: String,
+                  @Field("destination") destination: String,
+                  @Field("date") date: String,
+                  @Field("adult") adult: String,
+                  @Field("infant") infant: String,
+                  @Field("is_cheap_class") is_cheap_class: String,
+                  @Field("class") clas: String,
+                  @Field("is_return") is_return: String,
+                  @Field("date_back") date_back: String): Observable<Kereta>
 }

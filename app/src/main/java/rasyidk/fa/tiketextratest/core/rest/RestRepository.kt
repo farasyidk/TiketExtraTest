@@ -12,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import rasyidk.fa.tiketextratest.core.AppPreferences
 import rasyidk.fa.tiketextratest.helper.UserSession
 import rasyidk.fa.tiketextratest.model.Bank
+import rasyidk.fa.tiketextratest.model.Kereta
 import rasyidk.fa.tiketextratest.model.Users
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -65,7 +66,8 @@ class RestRepository(context: Context) : APIs {
                             .method(originalRequest.method(), originalRequest.body())
                     session = UserSession(context)
                     // Add JWT Token to the header if not empty
-                    if (session.getUserDetails()["token"]?.isNotEmpty()!!) {
+                    if (authorizationTokenIsEmpty()!!) {
+                        Log.d("cekTok", "hayy ")
                         requestBuilder.addHeader("Authorization", "Bearer ${session.getUserDetails()["token"]}")
                     }
 
@@ -131,6 +133,10 @@ class RestRepository(context: Context) : APIs {
         return null
     }
 
+    fun authorizationTokenIsEmpty(): Boolean? {
+        return session.loginCheck()
+    }
+
     override fun getToken(username: String, password: String): Call<ResponseBody> {
         return mRestServices.loginRequest(username, password)
     }
@@ -149,5 +155,10 @@ class RestRepository(context: Context) : APIs {
 
     override fun getBank(): Observable<ArrayList<Bank>> {
         return mRestServices.getBank()
+    }
+
+    override fun getKereta(origin: String, destination: String, date: String, date_back:String, adult: String,
+                           infant: String, is_return: String): Observable<Kereta> {
+        return mRestServices.getKereta(origin, destination, date, adult, infant, "false", "", is_return, date_back)
     }
 }

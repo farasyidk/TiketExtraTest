@@ -3,6 +3,7 @@ package rasyidk.fa.tiketextratest.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ class BankFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_bank, container, false)
 
         Log.d("sampai", "home")
-
+        (context as AppCompatActivity).supportActionBar?.title = "Pembayaran"
         mApis = RestRepository(context!!)
 
         mApis.getBank()
